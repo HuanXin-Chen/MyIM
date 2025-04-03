@@ -2,12 +2,12 @@ package client
 
 import (
 	"fmt"
+	"github.com/HuanXin-Chen/MyIM/common/sdk"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"time"
 
-	"github.com/HuanXin-Chen/MyIM/client/sdk"
 	"github.com/gookit/color"
 	"github.com/rocket049/gocui"
 )
