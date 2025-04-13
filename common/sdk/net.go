@@ -1,22 +1,51 @@
 package sdk
 
+import (
+	"encoding/json"
+	"github.com/HuanXin-Chen/MyIM/common/tcp"
+	"net"
+)
+
 // 封装为一个网络连接对象
 type connect struct {
-	serverAddr         string
 	sendChan, recvChan chan *Message
+	conn               *net.TCPConn
 }
 
-func newConnet(serverAddr string) *connect {
-	return &connect{
-		serverAddr: serverAddr,
-		sendChan:   make(chan *Message),
-		recvChan:   make(chan *Message),
+func newConnet(ip net.IP, port int) *connect {
+	clientConn := &connect{
+		sendChan: make(chan *Message),
+		recvChan: make(chan *Message),
 	}
+	addr := &net.TCPAddr{IP: ip, Port: port}
+	conn, err := net.DialTCP("tcp", nil, addr)
+	if err != nil {
+		panic(err)
+	}
+	clientConn.conn = conn
+	go func() {
+		for {
+			data, err := tcp.ReadData(conn)
+			if err != nil {
+				panic(err)
+			}
+			msg := &Message{}
+			json.Unmarshal(data, msg)
+			clientConn.recvChan <- msg
+		}
+	}()
+	return clientConn
 }
 
 func (c *connect) send(data *Message) {
 	// 直接发送给接收方
-	c.recvChan <- data
+	bytes, _ := json.Marshal(data)
+	dataPgk := tcp.DataPgk{
+		Data: bytes,
+		Len:  uint32(len(bytes)),
+	}
+	xx := dataPgk.Marshal()
+	c.conn.Write(xx)
 }
 
 func (c *connect) recv() <-chan *Message {

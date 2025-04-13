@@ -16,7 +16,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(
 		&ConfigPath,
 		"config",
-		"./im.yaml",
+		"im.yaml",
 		"config file (default is ./im.yaml)")
 }
 
