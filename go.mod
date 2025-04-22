@@ -7,6 +7,7 @@ require (
 	github.com/gookit/color v1.5.1
 	github.com/rocket049/gocui v0.3.2
 	github.com/spf13/cobra v1.5.0
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (
@@ -76,7 +77,7 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.9.0
 	go.opentelemetry.io/otel/sdk v1.9.0
 	go.opentelemetry.io/otel/trace v1.9.0
-	go.uber.org/zap v1.22.0 // indirect
+	go.uber.org/zap v1.22.0
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/sys v0.2.0
 	golang.org/x/text v0.4.0 // indirect
