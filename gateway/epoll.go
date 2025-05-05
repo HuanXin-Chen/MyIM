@@ -195,7 +195,6 @@ func setLimit() {
 		panic(err)
 	}
 	rLimit.Cur = rLimit.Max
-	fmt.Println("支持的Max", rLimit.Max)
 	if err := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rLimit); err != nil {
 		panic(err)
 	}
